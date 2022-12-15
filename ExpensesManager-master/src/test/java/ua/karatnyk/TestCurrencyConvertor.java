@@ -21,7 +21,9 @@ import ua.karatnyk.impl.CurrencyConvertor;
 import ua.karatnyk.impl.OfflineJsonWorker;
 
 
+
 public class TestCurrencyConvertor {
+
 
 	//private CurrencyConvertor test;
 	private CurrencyConversion conversion;
@@ -64,6 +66,7 @@ public class TestCurrencyConvertor {
 	public void currency5() throws ParseException{
 		conversion  = new OfflineJsonWorker().parser();
 		double output = CurrencyConvertor.convert( 12.00, "CAFFD" , "USD", conversion);
+		
 	}
 	
 	@Test (expected = ParseException.class)
@@ -129,12 +132,103 @@ public class TestCurrencyConvertor {
 		double output = CurrencyConvertor.convert( 12.00, "CAD" , "12.00", conversion);
 	}
 	
+	//Black Box test
+	/*
+	 * Classes d’équivalence
+	 */
+	
+	@Test 
+	public void currency15() throws ParseException{
+		try{
+			conversion  = new OfflineJsonWorker().parser();
+			double output = CurrencyConvertor.convert(0, "CAD" , "USD", conversion);
+			assertTrue(output == 0);
+		}
+		catch(Exception e)
+		{
+			fail("currency not currently support");
+		}
+	}
+	
+	@Test 
+	public void currency16() throws ParseException{
+		try{
+			conversion  = new OfflineJsonWorker().parser();
+			double output = CurrencyConvertor.convert(10000, "CAD" , "USD", conversion);
+			assertTrue(output>0);
+		}
+		catch(Exception e)
+		{
+			fail("currency not currently support");
+		}
+	}
+	
+	@Test (expected = ParseException.class)
+	public void currency17() throws ParseException{
+		try{
 
+		
+			conversion  = new OfflineJsonWorker().parser();
+			double output = CurrencyConvertor.convert(-1, "CAD" , "USD", conversion);
+			
+			assertFalse(output>0);
+		}
+		catch(Exception e)
+		{
+			fail("currency not currently support");
+		}
+		
+	}
+	
+	@Test (expected = ParseException.class)
+	public void currency18() throws ParseException{
+		try{
+			conversion  = new OfflineJsonWorker().parser();
+			double output = CurrencyConvertor.convert(10001, "CAD" , "USD", conversion);
+			assertFalse(output<0);
+		}
+		catch(Exception e)
+		{
+			fail("currency not currently support");
+		}
+		
+	}
+	
+	/*
+	 * Valeurs frontières
+	 */
+	
+	@Test 
+	public void currency19() throws ParseException{
+		try{
+			conversion  = new OfflineJsonWorker().parser();
+			double output = CurrencyConvertor.convert(1, "CAD" , "USD", conversion);
+			
+			assertTrue(output == 0.7438535542490645);
+		}
+		catch(Exception e)
+		{
+			fail("currency not currently support");
+		}
+	}
+	
+	@Test 
+	public void currency20() throws ParseException{
+		try{
+			conversion  = new OfflineJsonWorker().parser();
+			double output = CurrencyConvertor.convert(9999, "CAD" , "USD", conversion);
+			assertTrue(output == 7437.791688936396);
+		}
+		catch(Exception e)
+		{
+			fail("currency not currently support");
+		}
+	}
 	
 	
 	
 	
-	
-	
-	
-}
+}	
+
+
+
